@@ -1,1 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiki.Guytou — présente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #12222d;
+    --bg-deep: #0c1922;
+    --paper: #f2e9da;
+    --paper-dim: #cfc4b2;
+    --brass: #c9973f;
+    --line: rgba(242,233,218,0.16);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--paper);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+  h1,h2,h3, .display{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  a{ color: inherit; text-decoration: none; }
+  img{ display:block; max-width:100%; }
+
+  .wrap{ max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky; top:0; z-index: 20;
+    background: linear-gradient(var(--bg-deep), rgba(12,25,34,0.85) 70%, transparent);
+    padding: 22px 0 14px;
+  }
+  .nav{
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .mark{ font-family:'Fraunces',serif; font-size:1.15rem; font-weight:600; }
+  .mark span{ color: var(--brass); }
+  nav.links{ display:flex; gap: 28px; font-size: 0.92rem; color: var(--paper-dim); }
+  nav.links a:hover{ color: var(--brass); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 64px 0 90px;
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items:end;
+  }
+  .hero-text{
+    animation: rise 900ms cubic-bezier(.2,.8,.2,1) both;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform: translateY(18px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  .hero .kicker{
+    color: var(--brass);
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 5.4vw, 4.6rem);
+    line-height: 1.02;
+    max-width: 11ch;
+  }
+  .hero p.lede{
+    margin-top: 26px;
+    max-width: 40ch;
+    color: var(--paper-dim);
+    font-size: 1.05rem;
+  }
+  .hero-frame{
+    position: relative;
+    border: 1px solid var(--line);
+    padding: 10px;
+  }
+  .hero-frame img{ width:100%; height: 300px; object-fit: cover; }
+  .hero-frame .cap{
+    display:flex; justify-content:space-between;
+    font-size: 0.78rem; color: var(--paper-dim);
+    padding-top: 8px;
+  }
+
+  /* ---------- Section shared ---------- */
+  section{ padding: 90px 0; border-top: 1px solid var(--line); }
+  .section-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom: 46px; gap: 24px; flex-wrap: wrap;
+  }
+  .section-head h2{ font-size: clamp(1.6rem, 3vw, 2.2rem); }
+  .section-head .note{ color: var(--paper-dim); font-size: 0.92rem; max-width: 34ch; }
+
+  /* ---------- Bio ---------- */
+  .bio{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap: 60px; }
+  .bio-portrait img{ width:100%; height: 340px; object-fit: cover; filter: grayscale(15%); }
+  .bio-copy p{ color: var(--paper-dim); max-width: 56ch; margin-bottom: 16px; }
+  .bio-copy p:first-child{ color: var(--paper); font-size: 1.1rem; }
+  .stats{ display:flex; gap: 40px; margin-top: 30px; }
+  .stats div b{ font-family:'Fraunces',serif; font-size: 1.6rem; display:block; color: var(--brass); }
+  .stats div span{ font-size: 0.82rem; color: var(--paper-dim); }
+
+  /* ---------- Contact sheet gallery ---------- */
+  .sheet{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .frame{
+    position: relative;
+    background: var(--bg-deep);
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+  .frame img{
+    width:100%; height:100%; object-fit: cover;
+    transform: scale(0.9);
+    transition: transform 600ms ease, filter 600ms ease;
+    filter: saturate(0.9);
+  }
+  .frame:hover img{ transform: scale(1.08); filter: saturate(1.05); }
+  .frame .tag{
+    position:absolute; top:10px; left:12px;
+    font-family:'Fraunces',serif; font-size: 0.8rem; color: var(--brass);
+    background: rgba(12,25,34,0.55); padding: 2px 8px; border: 1px solid var(--line);
+  }
+  .frame .title{
+    position:absolute; bottom:0; left:0; right:0;
+    padding: 12px 14px; font-size: 0.85rem;
+    background: linear-gradient(transparent, rgba(12,25,34,0.9));
+  }
+
+  /* ---------- Contact ---------- */
+  .contact{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items:start;
+  }
+  .contact h2{ font-size: clamp(2rem, 4vw, 3rem); max-width: 12ch; }
+  .contact p{ color: var(--paper-dim); margin-top: 18px; max-width: 44ch; }
+  .roll{ list-style:none; }
+  .roll li{
+    border-bottom: 1px solid var(--line);
+  }
+  .roll a{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 18px 4px; font-size: 1.05rem;
+  }
+  .roll a .to{ color: var(--paper-dim); font-size: 0.85rem; }
+  .roll a:hover{ color: var(--brass); }
+  .roll a:hover .to{ color: var(--brass); }
+
+  footer{
+    padding: 28px 0 40px;
+    display:flex; justify-content:space-between;
+    color: var(--paper-dim); font-size: 0.82rem;
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 820px){
+    .hero{ grid-template-columns: 1fr; }
+    .hero-frame img{ height: 320px; }
+    .bio{ grid-template-columns: 1fr; }
+    .sheet{ grid-template-columns: repeat(2, 1fr); }
+    .contact{ grid-template-columns: 1fr; }
+    nav.links{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="mark">kiki.guytou <span>·</span> présente</div>
+    <nav class="links">
+      <a href="#travaux">Travaux</a>
+      <a href="#a-propos">À propos</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" style="border-top:none; padding-top:20px;">
+    <div class="hero-text">
+      <div class="kicker">site de Kiki.Guytou.</div>
+      <h1>Bienvenue sur notre site</h1>
+      <p class="lede">Site perso, photos, photos montages , Intelligence artificielle</p>
+    </div>
+    <div class="hero-frame">
+      <img src="IMG-20260726-WA0003.jpg" alt="Kiki.guytou présente...">
+      <div class="cap"><span>Paris</span><span>Aout 2026</span></div>
+    </div>
+  </section>
+
+  <section id="a-propos" class="bio">
+    <div class="bio-portrait">
+      <img src="IMG-20260606-WA0000.jpg" alt="Portrait de la photographe">
+    </div>
+    <div class="bio-copy">
+      <p>Villers sur mer est située sur le littoral de la Manche, sur la Côte Fleurie, entre Deauville et Houlgate, à environ 45 km de Caen, 70 km du Havre, 100 km de Rouen, 200 km de Paris.</p>
+      <p>Villers-sur-Mer est également la commune française la plus septentrionale traversée par le méridien de Greenwich.</p>
+      <p>Rénové en 2016, ce dernier est matérialisé par une ligne bleue sur le parapet de la digue centrale juste après le casino et par un marquage au sol lumineux[1]. Cette ligne fictive est néanmoins décalée de 102,478 m vers l'ouest par rapport au méridien[2].</p>
+      <div class="stats">
+        <div><b>10</b><span>ans de pratique</span></div>
+        <div><b>140</b><span>reportages</span></div>
+        <div><b>6</b><span>expositions</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="travaux">
+    <div class="section-head">
+      <h2>Garden Party à Igny le 31 Aout 2026</h2>
+      <div class="note">Une sélection de quelques photos.</div>
+    </div>
+    <div class="sheet">
+      <div class="frame">
+        <img src="IMG-20260830-WA0003.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">01</div>
+        <div class="title">A table</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0005.jpg" alt="Série paysage, champ de lavande">
+        <div class="tag">02</div>
+        <div class="title">Manque une chaise</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0008.jpg" alt="Série animalière, chevreuil en forêt">
+        <div class="tag">03</div>
+        <div class="title">Alcoolique ?</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0011.jpg" alt="Série architecture, escalier en pierre">
+        <div class="tag">04</div>
+        <div class="title">C'est prêt</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0014.jpg" alt="Série nature, forêt brumeuse">
+        <div class="tag">05</div>
+        <div class="title">Commence à pleuvoir</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0013.jpg" alt="Série côtière, falaise et mer">
+        <div class="tag">06</div>
+        <div class="title">Fait plus chaud à l'interieur</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0017.jpg" alt="Série côtière, falaise et mer">
+        <div class="tag">07</div>
+        <div class="title">Y a des restes ?</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0020.jpg" alt="Série côtière, falaise et mer">
+        <div class="tag">08</div>
+        <div class="title">Etoiles de neiges....</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0028.jpg" alt="Série côtière, falaise et mer">
+        <div class="tag">09</div>
+        <div class="title">Pépère..!</div>
+      </div>
+    </div>
+  </section>
+  
+  
+   <section id="travaux">
+    <div class="section-head">
+      <div class="note">Une sélection de quelques photos modifiées par IA</div>
+    </div>
+    <div class="sheet">
+      <div class="frame">
+        <img src="IMG-20260830-WA0029.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">01</div>
+        <div class="title">Les cousines</div>
+      </div>
+       <div class="frame">
+        <img src="IMG-20260830-WA0034.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">02</div>
+        <div class="title">A Versailles</div>
+      </div>
+       <div class="frame">
+        <img src="IMG-20260830-WA0035.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">03</div>
+        <div class="title">Les compères</div>
+      </div>
+      <div class="frame">
+        <img src="IMG-20260830-WA0037.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">04</div>
+        <div class="title">Medaille d'or</div>
+      </div>
+       <div class="frame">
+        <img src="IMG-20260830-WA0039.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">05</div>
+        <div class="title">Jimmy Henri...x</div>
+      </div>
+       <div class="frame">
+        <img src="IMG-20260830-WA0045.jpg" alt="Série portrait, chien et lumière du matin">
+        <div class="tag">06</div>
+        <div class="title">Christine et Sophie</div>
+      </div>	  
+ 
+	  
+	  
+  </section>
+  <section id="contact" class="contact">
+    <div>
+      <h2>Travaillons ensemble.</h2>
+      <p>Pour une commande, une exposition ou simplement dire bonjour — j'y réponds toujours moi-même, en général sous deux jours.</p>
+    </div>
+    <ul class="roll">
+      <li><a href="mailto:lea.moreau@example.com">Email <span class="to">kiki.guytou@gmail.com</span></a></li>
+      <li><a href="https://instagram.com/lea.moreau.photo" target="_blank" rel="noopener">Instagram <span class="to">@kiki.guytou.photo</span></a></li>
+      <li><a href="https://www.behance.net/leamoreau" target="_blank" rel="noopener">Behance <span class="to">behance.net/kiki.guytou</span></a></li>
+      <li><a href="https://www.linkedin.com/in/leamoreau" target="_blank" rel="noopener">LinkedIn <span class="to">in/kiki.guytou</span></a></li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© 2026 Guytou</span>
+  <span>Site fait à la main, avec beaucoup de café.</span>
+</footer>
+
+</body>
+</html>
 

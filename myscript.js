@@ -5,7 +5,7 @@
  
       if (this.answer.value === atob('aWdueQ==')) {
         o.style.display = "none";
-		window.open('personal.html')
+		window.open('index_site.html')
       } else {
         alert('Wrong password!');
       }

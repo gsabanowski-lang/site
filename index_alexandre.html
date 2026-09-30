@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbre Généalogique</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600&display=swap');
+
+  :root{
+    --parchment: #f2ead9;
+    --parchment-dark: #e6d9bd;
+    --ink: #2f2a20;
+    --forest: #3c5a44;
+    --forest-deep: #23392a;
+    --gold: #a97c3f;
+    --line: #b79a6b;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse at top left, rgba(60,90,68,0.06), transparent 60%),
+      var(--parchment);
+    color: var(--ink);
+    font-family:'Jost', sans-serif;
+    padding: 60px 20px 100px;
+    min-height:100vh;
+  }
+
+  /* subtle paper texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 2px),
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.015) 0px, transparent 1px, transparent 2px);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  header{
+    text-align:center;
+    margin-bottom: 20px;
+    position:relative;
+    z-index:1;
+  }
+
+  .eyebrow{
+    font-size: 12px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight:500;
+  }
+
+  h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:700;
+    font-size: clamp(38px, 6vw, 64px);
+    margin: 6px 0 8px;
+    color: var(--forest-deep);
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle{
+    font-style: italic;
+    font-family:'Cormorant Garamond', serif;
+    font-size: 19px;
+    color: #6b5f47;
+    margin-bottom: 6px;
+  }
+
+  .divider{
+    width: 140px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 26px auto 60px;
+  }
+
+  .tree{
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index:1;
+  }
+
+  .generation{
+    position: relative;
+    margin-bottom: 10px;
+  }
+
+  .gen-label{
+    text-align:center;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--forest);
+    opacity: 0.65;
+    margin-bottom: 22px;
+    font-weight: 500;
+  }
+
+  .row{
+    display:flex;
+    justify-content:center;
+    align-items: flex-start;
+    gap: 60px;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .couple{
+    display:flex;
+    align-items:center;
+    gap: 0;
+  }
+
+  .card{
+    background: #fffdf8;
+    border: 1px solid var(--parchment-dark);
+    border-top: 3px solid var(--forest);
+    border-radius: 2px;
+    padding: 18px 22px;
+    width: 190px;
+    text-align:center;
+    box-shadow: 0 2px 10px rgba(47,42,32,0.06);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display:block;
+    text-decoration:none;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(47,42,32,0.12);
+    border-top-color: var(--gold);
+  }
+
+  .card:hover .name{
+    color: var(--gold);
+  }
+
+  .card .name{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size: 21px;
+    color: var(--forest-deep);
+    line-height:1.2;
+  }
+
+  .card .dates{
+    font-size: 12px;
+    color: #8a7d5f;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .card .role{
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 6px;
+  }
+
+  .ring{ width: 22px; height: 22px; display:flex; align-items:center; justify-content:center; margin: 0 -3px; z-index:2; }
+  .ring svg{ width:100%; height:100%; }
+
+  /* connectors */
+  .connectors{
+    height: 46px;
+    position: relative;
+  }
+
+  .connectors svg{
+    width:100%;
+    height:100%;
+    overflow: visible;
+  }
+
+  .connectors path, .connectors line{
+    stroke: var(--line);
+    stroke-width: 1.4;
+    fill: none;
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 70px;
+    font-size: 12px;
+    color: #9b8f74;
+    letter-spacing: 1px;
+    position:relative;
+    z-index:1;
+  }
+
+  footer .note{
+    max-width: 480px;
+    margin: 0 auto 8px;
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: #6b5f47;
+  }
+
+  @media (max-width: 700px){
+    .row{ gap: 26px; }
+    .card{ width: 150px; padding: 14px 12px; }
+    .card .name{ font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Souvenirs de famille</div>
+  <h1>Arbre Généalogique</h1>
+  <div class="subtitle">Famille Jean Sabanowski — quatres générations</div>
+</header>
+<div class="divider"></div>
+
+<div class="tree">
+
+  <!-- Génération 1 -->
+  <div class="generation">
+    <div class="gen-label">Génération III</div>
+    <div class="row">
+      <div class="couple">
+        <a class="card" href="henri-lemoine.html">
+          <div class="name">Alexandre</div>
+          <div class="dates">né en ??</div>
+ 
+        </a>
+           <div class="ring">
+		  <svg viewBox="0 0 24 24" fill="none" stroke="#a9812f" stroke-width="1.6">
+			<circle cx="9" cy="12" r="6.2"/>
+			<circle cx="15" cy="12" r="6.2"/>
+		  </svg>
+		</div>
+        <a class="card" href="odette-lemoine.html">
+          <div class="name">??</div>
+          <div class="dates">née en ??</div>
+ 
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="connectors">
+    <svg viewBox="0 0 100 46" preserveAspectRatio="none">
+      <line x1="50" y1="0" x2="50" y2="20"/>
+      <line x1="40" y1="20" x2="60" y2="20"/>
+      <line x1="40" y1="20" x2="40" y2="46"/>
+      <line x1="60" y1="20" x2="60" y2="46"/>
+    </svg>
+  </div>
+
+  <!-- Génération 2 -->
+  <div class="generation">
+    <div class="gen-label">Génération IV</div>
+    <div class="row">
+      <div class="couple">
+        <a class="card" href="stanis.html">
+          <div class="name">Leandre</div>
+          <div class="dates">né en ??</div>
+		</a>
+ 
+        <div class="ring">
+		  <svg viewBox="0 0 24 24" fill="none" stroke="#a9812f" stroke-width="1.6"></svg>
+		</div>  
+			
+        <a class="card" href="stanis.html">
+          <div class="name">Ambroise</div>
+          <div class="dates">né en ??</div>
+		</a>
+ 
+    
+  
+    </div>
+  </div>
+
+ 
+ 
+
+</div>
+
+<footer>
+  <div class="note">« On n'hérite pas la terre de nos ancêtres, on l'emprunte à nos enfants. »</div>
+  <div>Remplacez les noms, dates et liens ci-dessus pour créer votre propre arbre</div>
+</footer>
+
+</body>
+</html>

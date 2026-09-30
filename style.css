@@ -1,0 +1,59 @@
+      .body {
+        padding:10% 0;
+        text-align:center;
+      }
+      .overlay {
+        position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        left:0;
+        z-index:9999;
+        background-color:white;
+        color:white;
+        padding:10% 0;
+        text-align:center;
+      }
+	  
+	  form {
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  button {
+    background-color: #00FF00;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+    h1,h2,h3, .display{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  } 
+  header{
+    position: sticky; top:0; z-index: 20;
+    background: linear-gradient(var(--bg-deep), rgba(12,25,34,0.85) 70%, transparent);
+    padding: 22px 0 14px;
+  }

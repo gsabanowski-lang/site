@@ -18,4 +18,4 @@ export default async (request, context) => {
   });
 };
 
-export const config = { path: "/prive/arbre_1.html" };
+export const config = { path: "prive/arbre_1.html" };

@@ -5,8 +5,8 @@ export default async (request, context) => {
   if (scheme === "Basic" && encoded) {
     const [user, pass] = atob(encoded).split(":");
     if (
-      user === Netlify.env.get("UTILISATEUR") &&
-      pass === Netlify.env.get("MDP")
+      user === Netlify.env.get("AUTH_USER") &&
+      pass === Netlify.env.get("AUTH_PASS")
     ) {
       return context.next();
     }
